@@ -8,7 +8,8 @@ import (
 	"strings"
 )
 
-func runProgram(program []int, index int) []int {
+// RunProgram - Run the programmable memory from the ship's computer
+func RunProgram(program []int, index int) []int {
 	opcode := program[index]
 	indexOffset := 4
 
@@ -16,12 +17,12 @@ func runProgram(program []int, index int) []int {
 	case 1:
 		program[program[index+3]] = program[program[index+1]] + program[program[index+2]]
 
-		program = runProgram(program, index+indexOffset)
+		program = RunProgram(program, index+indexOffset)
 		break
 	case 2:
 		program[program[index+3]] = program[program[index+1]] * program[program[index+2]]
 
-		program = runProgram(program, index+indexOffset)
+		program = RunProgram(program, index+indexOffset)
 		break
 	case 99:
 		break
@@ -38,12 +39,12 @@ func main() {
 
 	for scanner.Scan() {
 		program := make([]int, 0)
-		 for _, value := range strings.Split(scanner.Text(), ",") {
-		 	iValue, _ := strconv.Atoi(value)
-		 	program = append(program, iValue)
+		for _, value := range strings.Split(scanner.Text(), ",") {
+			iValue, _ := strconv.Atoi(value)
+			program = append(program, iValue)
 		}
 
-		solvedProgram := runProgram(program, 0)
+		solvedProgram := RunProgram(program, 0)
 
 		fmt.Println(solvedProgram)
 	}
